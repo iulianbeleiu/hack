@@ -32,3 +32,15 @@ class Product(models.Model):
 
     def __str__(self):  # __unicode__ for Python 2
         return "Name: {}, Description: {}, Price: {}, Company: {}".format(self.name, self.description, self.price, self.company)
+
+
+class Job(models.Model):
+    name = models.CharField(max_length=30, blank=False)
+    description = models.TextField(blank=False)
+    availableFrom = models.DateField(blank=False)
+    isActive = models.BooleanField(blank=False)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    creationDate = models.DateField(blank=False)
+
+    def __str__(self):  # __unicode__ for Python 2
+        return self.name
