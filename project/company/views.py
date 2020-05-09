@@ -21,7 +21,7 @@ def new(request):
             revenues = Revenue.objects.all()
             revenue_id = None
             for revenue in revenues:
-                if revenue.intervalMax >= company_revenue >= revenue.intervalMin:
+                if revenue.intervalMax >= int(company_revenue) >= revenue.intervalMin:
                     revenue_id = revenue
 
             if revenue_id:
@@ -33,7 +33,7 @@ def new(request):
         else:
             return JsonResponse(['get'], safe=False)
     except(Exception):
-        return JsonResponse({'message:' 'Internal Server Error'}, status=500)
+        return JsonResponse({'message': 'Internal Server Error'}, status=500)
 
 
 def detail(request, id):
