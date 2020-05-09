@@ -8,3 +8,4 @@ class UnemployedAdmin(admin.ModelAdmin):
     list_editable = ('name', 'email')
     list_filter = ('name', 'address', 'email', 'phoneNumber')
     search_fields = ('name', 'address')
+    list_per_page = 10
