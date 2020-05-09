@@ -6,31 +6,34 @@ from .models import Company, Revenue, Product
 
 @csrf_exempt
 def new(request):
-    if request.method == 'POST':
-        json_data = json.loads(request.body)
-        company = Company()
-        company.name = json_data['name']
-        company.address = json_data['address']
-        company.email = json_data['email']
-        company.phoneNumber = json_data['phoneNumber']
-        company.fiscalData = json_data['fiscalData']
-        company.activityDomain = json_data['activityDomain']
+    try:
+        if request.method == 'POST':
+            json_data = json.loads(request.body)
+            company = Company()
+            company.name = json_data['name']
+            company.address = json_data['address']
+            company.email = json_data['email']
+            company.phoneNumber = json_data['phoneNumber']
+            company.fiscalData = json_data['fiscalData']
+            company.activityDomain = json_data['activityDomain']
 
-        company_revenue = json_data['revenue']
-        revenues = Revenue.objects.all()
-        revenue_id = None
-        for revenue in revenues:
-            if revenue.intervalMax >= company_revenue >= revenue.intervalMin:
-                revenue_id = revenue
+            company_revenue = json_data['revenue']
+            revenues = Revenue.objects.all()
+            revenue_id = None
+            for revenue in revenues:
+                if revenue.intervalMax >= company_revenue >= revenue.intervalMin:
+                    revenue_id = revenue
 
-        if revenue_id:
-            company.revenue = revenue_id
+            if revenue_id:
+                company.revenue = revenue_id
+            else:
+                company.revenue = Revenue()
+            company.save()
+            return JsonResponse({'companyId': company.id})
         else:
-            company.revenue = Revenue()
-        company.save()
-        return JsonResponse({'companyId': company.id})
-    else:
-        return JsonResponse(['get'], safe=False)
+            return JsonResponse(['get'], safe=False)
+    except(Exception):
+        return JsonResponse({'message:' 'Internal Server Error'}, status=500)
 
 
 def detail(request, id):
