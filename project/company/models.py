@@ -1,6 +1,14 @@
 from django.db import models
 
-# Create your models here.
+
+class Revenue(models.Model):
+    name = models.CharField(max_length=30, blank=True)
+    intervalMin = models.IntegerField()
+    intervalMax = models.IntegerField()
+    percent = models.IntegerField()
+
+    def __str__(self):  # __unicode__ for Python 2
+        return self.name
 
 
 class Company(models.Model):
@@ -10,7 +18,17 @@ class Company(models.Model):
     phoneNumber = models.CharField(max_length=15, blank=False)
     fiscalData = models.TextField(blank=False)
     activityDomain = models.CharField(max_length=50, blank=False)
-    revenueId = models.IntegerField()
+    revenue = models.ForeignKey(Revenue, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):  # __unicode__ for Python 2
-        return "Name: {}, Adress: {}".format(self.name, self.address)
+        return self.name
+
+
+class Product(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30, blank=False)
+    description = models.TextField(blank=False)
+    price = models.IntegerField()
+
+    def __str__(self):  # __unicode__ for Python 2
+        return "Name: {}, Description: {}, Price: {}, Company: {}".format(self.name, self.description, self.price, self.company)
