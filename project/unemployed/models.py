@@ -1,5 +1,6 @@
 from django.db import models
 from company.models import Job
+from course.models import Course
 
 
 class Unemployed(models.Model):
@@ -20,3 +21,9 @@ class Unemployed(models.Model):
 class UnemployedJob(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
     unemployed = models.ForeignKey(Unemployed, on_delete=models.CASCADE)
+
+
+class UnemployedCourse(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    unemployed = models.ForeignKey(Unemployed, on_delete=models.CASCADE)
+    grade = models.IntegerField()
