@@ -2,6 +2,8 @@ from django.db import models
 
 
 class Unemployed(models.Model):
+    class Meta:
+        verbose_name_plural = "Unemployed"
     name = models.CharField(max_length=30, blank=False)
     dateOfBirth = models.DateField(null=True, blank=True, default='')
     address = models.TextField(blank=False)

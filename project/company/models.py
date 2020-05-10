@@ -12,6 +12,8 @@ class Revenue(models.Model):
 
 
 class Company(models.Model):
+    class Meta:
+        verbose_name_plural = "Companies"
     name = models.CharField(max_length=30, blank=False)
     address = models.TextField(blank=False)
     email = models.CharField(max_length=50, blank=False)
