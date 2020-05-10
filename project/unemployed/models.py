@@ -1,4 +1,5 @@
 from django.db import models
+from company.models import Job
 
 
 class Unemployed(models.Model):
@@ -14,3 +15,8 @@ class Unemployed(models.Model):
 
     def __str__(self):  # __unicode__ for Python 2
         return self.name
+
+
+class UnemployedJob(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    unemployed = models.ForeignKey(Unemployed, on_delete=models.CASCADE)
