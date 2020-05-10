@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Company, Product, Revenue, Job
 # Register your models here.
+admin.site.site_header = "FixItAll Administration"
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
